@@ -1,1 +1,1 @@
-# Opxs - Omnius Anything Service　(Infra)
+# Opxs - Omnius Anything Service (Infra)
