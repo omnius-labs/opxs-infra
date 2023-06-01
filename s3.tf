@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "opxs_web" {
-  bucket        = "opxs.v1.web"
+  bucket        = "opxs.v1.${var.run_mode}.web"
   force_destroy = true
 }
 
