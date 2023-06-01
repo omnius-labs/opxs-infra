@@ -3,11 +3,6 @@ resource "aws_s3_bucket" "opxs_web" {
   force_destroy = true
 }
 
-resource "aws_s3_bucket_acl" "opxs_web" {
-  bucket = aws_s3_bucket.opxs_web.id
-  acl    = "public-read"
-}
-
 resource "aws_s3_bucket_policy" "opxs_web" {
   bucket = aws_s3_bucket.opxs_web.id
   policy = data.aws_iam_policy_document.opxs_web_policy.json
