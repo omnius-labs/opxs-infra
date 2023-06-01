@@ -5,7 +5,7 @@ resource "aws_s3_bucket" "opxs_web" {
 
 resource "aws_s3_bucket_acl" "opxs_web" {
   bucket = aws_s3_bucket.opxs_web.id
-  acl    = "private"
+  acl    = "public-read"
 }
 
 resource "aws_s3_bucket_policy" "opxs_web" {
