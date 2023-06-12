@@ -39,7 +39,7 @@ resource "aws_route_table_association" "opxs_public_1c" {
 }
 
 resource "aws_security_group" "opxs" {
-  name   = "tmp"
+  name   = "opxs"
   vpc_id = aws_vpc.opxs.id
   egress {
     from_port   = 0

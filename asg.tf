@@ -5,7 +5,7 @@ data "aws_ssm_parameter" "ecs_optimized_ami" {
 }
 
 resource "aws_autoscaling_group" "opxs_api_ecs_asg" {
-  name = "opxs-ecs-asg"
+  name = "opxs-api-ecs-asg"
 
   max_size = 2
   min_size = 0

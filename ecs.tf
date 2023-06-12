@@ -29,10 +29,6 @@ resource "aws_ecs_capacity_provider" "opxs-api-cluster-ec2" {
   }
 }
 
-################################################
-## Service: opxs-api
-################################################
-
 resource "aws_ecs_service" "opxs-api" {
   name            = "opxs-api"
   task_definition = aws_ecs_task_definition.opxs-api.arn
@@ -62,7 +58,7 @@ resource "aws_ecs_task_definition" "opxs-api" {
   }
 ]
 EOF
-  family                   = "test-task"
+  family                   = "opxs-api-task"
   cpu                      = "128"
   memory                   = "128"
   requires_compatibilities = ["EC2"]
