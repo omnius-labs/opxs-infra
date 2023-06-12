@@ -51,7 +51,7 @@ resource "aws_ecs_task_definition" "opxs-api" {
 [
   {
     "name": "opxs-api",
-    "image": "ubuntu:latest",
+    "image": "${aws_ecr_repository.opxs_api.repository_url}:latest",
     "memory": 128,
     "essential": true,
     "command": ["tail", "-f", "/dev/null"]

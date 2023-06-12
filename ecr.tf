@@ -1,5 +1,5 @@
-resource "aws_ecr_repository" "opxs_api_lambda" {
-  name = "opxs-api-lambda"
+resource "aws_ecr_repository" "opxs_api" {
+  name = "opxs-api"
 }
 
 locals {
@@ -21,7 +21,7 @@ locals {
   }
 }
 
-resource "aws_ecr_lifecycle_policy" "opxs_api_lambda" {
-  repository = aws_ecr_repository.opxs_api_lambda.name
+resource "aws_ecr_lifecycle_policy" "opxs_api" {
+  repository = aws_ecr_repository.opxs_api.name
   policy     = jsonencode(local.ecr-lifecycle-policy)
 }
