@@ -5,20 +5,20 @@ resource "aws_s3_bucket" "opxs_web" {
 
 resource "aws_s3_bucket_policy" "opxs_web" {
   bucket = aws_s3_bucket.opxs_web.id
-  policy = data.aws_iam_policy_document.opxs_web_policy.json
-}
-
-data "aws_iam_policy_document" "opxs_web_policy" {
-  statement {
-    sid    = "Allow CloudFront"
-    effect = "Allow"
-    principals {
-      type        = "AWS"
-      identifiers = [aws_cloudfront_origin_access_identity.opxs.iam_arn]
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "Allow CloudFront",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "${aws_cloudfront_origin_access_identity.opxs.iam_arn}"
+      },
+      "Action": "s3:GetObject",
+      "Resource":"${aws_s3_bucket.opxs_web.arn}/*"
     }
-    actions = [
-      "s3:GetObject"
-    ]
-    resources = ["${aws_s3_bucket.opxs_web.arn}/*"]
-  }
+  ]
+}
+EOF
 }
