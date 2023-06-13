@@ -35,7 +35,7 @@ resource "aws_autoscaling_group" "opxs_api_ecs_asg" {
 resource "aws_launch_template" "opxs_api" {
   name                   = "opxs_api"
   image_id               = data.aws_ssm_parameter.ecs_optimized_ami.value
-  vpc_security_group_ids = [aws_security_group.opxs.id]
+  vpc_security_group_ids = [aws_security_group.opxs_vpc.id]
   instance_type          = "t3.nano"
 
   block_device_mappings {
