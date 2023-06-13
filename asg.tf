@@ -68,6 +68,6 @@ EOF
   }
 
   iam_instance_profile {
-    arn = aws_iam_instance_profile.opxs_ecs_instance_role.arn
+    arn = aws_iam_instance_profile.opxs_ecs_instance.arn
   }
 }
