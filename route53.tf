@@ -34,9 +34,8 @@ resource "aws_route53_record" "opxs_for_verify" {
 }
 
 resource "aws_acm_certificate" "opxs" {
-  domain_name               = var.domain
-  subject_alternative_names = ["${var.run_mode}.${var.domain}"]
-  validation_method         = "DNS"
+  domain_name       = aws_route53_zone.opxs.name
+  validation_method = "DNS"
   lifecycle {
     create_before_destroy = true
   }
