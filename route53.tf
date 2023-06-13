@@ -55,8 +55,8 @@ resource "aws_route53_zone" "opxs_api" {
   name = "opxs.v1.${var.run_mode}.${var.domain}"
 }
 
-data "aws_lb" "opxs_api" {
-  arn = aws_lb.opxs_api.arn
+data "aws_lb" "opxs" {
+  arn = aws_lb.opxs.arn
 }
 
 resource "aws_route53_record" "opxs_api" {
@@ -64,8 +64,8 @@ resource "aws_route53_record" "opxs_api" {
   name    = aws_route53_zone.opxs_api.name
   type    = "A"
   alias {
-    name                   = data.aws_lb.opxs_api.dns_name
-    zone_id                = data.aws_lb.opxs_api.zone_id
+    name                   = data.aws_lb.opxs.dns_name
+    zone_id                = data.aws_lb.opxs.zone_id
     evaluate_target_health = false
   }
 }
