@@ -46,7 +46,7 @@ resource "aws_lb_listener_rule" "opxs_api_https" {
   }
   condition {
     path_pattern {
-      values = ["/api"]
+      values = ["/api/*"]
     }
   }
 }
