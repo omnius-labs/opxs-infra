@@ -42,7 +42,7 @@ resource "aws_ecs_service" "opxs_api" {
   }
 
   load_balancer {
-    target_group_arn = aws_lb.opxs_api.arn
+    target_group_arn = aws_lb_target_group.opxs_api.arn
     container_name   = "opxs-api"
     container_port   = 8080
   }
