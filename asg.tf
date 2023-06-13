@@ -35,7 +35,7 @@ resource "aws_autoscaling_group" "opxs_api_ecs_asg" {
 resource "aws_launch_template" "opxs_api" {
   name                   = "opxs_api"
   image_id               = data.aws_ssm_parameter.ecs_optimized_ami.value
-  vpc_security_group_ids = [aws_security_group.opxs_vpc.id]
+  vpc_security_group_ids = [aws_security_group.opxs_api_ecs_ec2.id]
   instance_type          = "t3.nano"
 
   block_device_mappings {
@@ -69,5 +69,16 @@ EOF
 
   iam_instance_profile {
     arn = aws_iam_instance_profile.opxs_ecs_instance.arn
+  }
+}
+
+resource "aws_security_group" "opxs_api_ecs_ec2" {
+  name   = "opxs-api-ecs-ec2-sg"
+  vpc_id = aws_vpc.opxs.id
+  ingress {
+    from_port       = 0
+    to_port         = 0
+    protocol        = "-1"
+    security_groups = [aws_security_group.opxs_alb.id]
   }
 }

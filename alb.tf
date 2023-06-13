@@ -2,10 +2,34 @@ resource "aws_lb" "opxs" {
   name               = "opxs-alb"
   internal           = false
   load_balancer_type = "application"
-  security_groups    = [aws_security_group.opxs_vpc.id]
+  security_groups    = [aws_security_group.opxs_alb.id]
   subnets            = [aws_subnet.opxs_public_1a.id, aws_subnet.opxs_public_1c.id]
 
   enable_deletion_protection = false
+}
+
+resource "aws_security_group" "opxs_alb" {
+  name   = "opxs-alb-sg"
+  vpc_id = aws_vpc.opxs.id
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+data "aws_ec2_managed_prefix_list" "cloudfront" {
+  name = "com.amazonaws.global.cloudfront.origin-facing"
+}
+
+resource "aws_security_group_rule" "ingress_from_cloudfront_sg_rule" {
+  type              = "ingress"
+  from_port         = 0
+  to_port           = 65535
+  protocol          = "tcp"
+  prefix_list_ids   = [data.aws_ec2_managed_prefix_list.cloudfront.id]
+  security_group_id = aws_security_group.opxs_alb.id
 }
 
 resource "aws_lb_listener" "opxs_http" {
