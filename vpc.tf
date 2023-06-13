@@ -64,7 +64,7 @@ data "aws_ec2_managed_prefix_list" "cloudfront" {
 
 resource "aws_lb" "opxs_api" {
   name               = "opxs-api-alb"
-  internal           = true
+  internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.opxs_vpc.id]
   subnets            = [aws_subnet.opxs_public_1a.id, aws_subnet.opxs_public_1c.id]
