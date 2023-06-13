@@ -1,5 +1,5 @@
 resource "aws_cloudfront_origin_access_identity" "opxs" {
-  comment = var.domain
+  comment = aws_route53_zone.opxs.name
 }
 
 resource "aws_cloudfront_distribution" "opxs" {
@@ -23,7 +23,7 @@ resource "aws_cloudfront_distribution" "opxs" {
   enabled             = true
   is_ipv6_enabled     = true
   default_root_object = "index.html"
-  aliases             = [var.domain]
+  aliases             = [aws_route53_zone.opxs.name]
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD"]
     cached_methods   = ["GET", "HEAD"]
