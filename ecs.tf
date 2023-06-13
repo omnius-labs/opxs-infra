@@ -1,18 +1,18 @@
-resource "aws_ecs_cluster" "opxs-api-cluster" {
+resource "aws_ecs_cluster" "opxs_api_cluster" {
   name = "opxs-api-cluster"
 }
 
-resource "aws_ecs_cluster_capacity_providers" "opxs-api-cluster-ec2" {
-  cluster_name       = aws_ecs_cluster.opxs-api-cluster.name
-  capacity_providers = [aws_ecs_capacity_provider.opxs-api-cluster-ec2.name]
+resource "aws_ecs_cluster_capacity_providers" "opxs_api_cluster_ec2" {
+  cluster_name       = aws_ecs_cluster.opxs_api_cluster.name
+  capacity_providers = [aws_ecs_capacity_provider.opxs_api_cluster_ec2.name]
   default_capacity_provider_strategy {
     base              = 0
     weight            = 1
-    capacity_provider = aws_ecs_capacity_provider.opxs-api-cluster-ec2.name
+    capacity_provider = aws_ecs_capacity_provider.opxs_api_cluster_ec2.name
   }
 }
 
-resource "aws_ecs_capacity_provider" "opxs-api-cluster-ec2" {
+resource "aws_ecs_capacity_provider" "opxs_api_cluster_ec2" {
   # Currentry, we cannot delete capacity provider. If you exec 'terraform destroy', you can delete resouce only on tfstate.
   name = "opxs-api-cluster-ec2"
 
@@ -29,14 +29,14 @@ resource "aws_ecs_capacity_provider" "opxs-api-cluster-ec2" {
   }
 }
 
-resource "aws_ecs_service" "opxs-api" {
+resource "aws_ecs_service" "opxs_api" {
   name            = "opxs-api"
-  task_definition = aws_ecs_task_definition.opxs-api.arn
-  cluster         = aws_ecs_cluster.opxs-api-cluster.arn
+  task_definition = aws_ecs_task_definition.opxs_api.arn
+  cluster         = aws_ecs_cluster.opxs_api_cluster.arn
   desired_count   = 0
 
   capacity_provider_strategy {
-    capacity_provider = aws_ecs_capacity_provider.opxs-api-cluster-ec2.name
+    capacity_provider = aws_ecs_capacity_provider.opxs_api_cluster_ec2.name
     weight            = 1
     base              = 0
   }
@@ -46,7 +46,7 @@ resource "aws_ecs_service" "opxs-api" {
   }
 }
 
-resource "aws_ecs_task_definition" "opxs-api" {
+resource "aws_ecs_task_definition" "opxs_api" {
   container_definitions    = <<EOF
 [
   {
