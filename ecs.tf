@@ -66,7 +66,6 @@ resource "aws_ecs_task_definition" "opxs_api" {
     "environment": [
       { "name": "RUN_MODE", "value": "dev" }
     ],
-    "command": ["tail", "-f", "/dev/null"]
   }
 ]
 EOF
