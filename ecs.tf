@@ -65,7 +65,8 @@ resource "aws_ecs_task_definition" "opxs_api" {
     "essential": true,
     "environment": [
       { "name": "RUN_MODE", "value": "dev" },
-      { "name": "RUST_BACKTRACE", "value": "1" }
+      { "name": "RUST_BACKTRACE", "value": "full" },
+      { "name": "AWS_REGION", "value": "${var.region}" }
     ],
     "logConfiguration": {
       "logDriver": "awslogs",
