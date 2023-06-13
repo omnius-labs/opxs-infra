@@ -96,9 +96,6 @@ resource "aws_lb_listener" "opxs_api_https" {
     type             = "forward"
     target_group_arn = aws_lb_target_group.opxs_api.arn
   }
-  depends_on = [
-    aws_acm_certificate_validation.opxs_api
-  ]
 }
 
 resource "aws_lb_target_group" "opxs_api" {
