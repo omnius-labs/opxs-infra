@@ -61,7 +61,7 @@ data "aws_lb" "opxs" {
 
 resource "aws_route53_record" "opxs_api_for_subdomain" {
   zone_id = aws_route53_zone.opxs.zone_id
-  name    = aws_route53_zone.opxs.name
+  name    = aws_route53_zone.opxs_api.name
   records = [
     aws_route53_zone.opxs_api.name_servers[0],
     aws_route53_zone.opxs_api.name_servers[1],
