@@ -74,5 +74,5 @@ EOF
   cpu                      = "128"
   memory                   = "128"
   requires_compatibilities = ["EC2"]
-  execution_role_arn       = aws_iam_role.opxs_api_ecs_tasks_execution_role
+  execution_role_arn       = aws_iam_role.opxs_api_ecs_tasks_execution_role.arn
 }
