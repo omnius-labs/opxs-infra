@@ -1,9 +1,9 @@
 ##################################################
-# opxs.omnius-labs.com
+# [dev/stg/prod].opxs.omnius-labs.com
 ##################################################
 
 resource "aws_route53_zone" "opxs" {
-  name = var.domain
+  name = "${var.run_mode}.${var.domain}"
 }
 
 resource "aws_route53_record" "opxs" {
@@ -48,11 +48,11 @@ resource "aws_acm_certificate_validation" "opxs" {
 }
 
 ##################################################
-# opxs.v1.[dev/stg/prod].omnius-labs.com
+# api.[dev/stg/prod].opxs.omnius-labs.com
 ##################################################
 
 resource "aws_route53_zone" "opxs_api" {
-  name = "opxs.v1.${var.run_mode}.${var.domain}"
+  name = "api.${var.run_mode}.${var.domain}"
 }
 
 data "aws_lb" "opxs" {
