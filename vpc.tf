@@ -53,19 +53,10 @@ data "aws_ec2_managed_prefix_list" "cloudfront" {
   name = "com.amazonaws.global.cloudfront.origin-facing"
 }
 
-resource "aws_security_group_rule" "ingress_from_cloudfront_http_sg_rule" {
+resource "aws_security_group_rule" "ingress_from_cloudfront_sg_rule" {
   type              = "ingress"
-  from_port         = 80
-  to_port           = 80
-  protocol          = "tcp"
-  prefix_list_ids   = [data.aws_ec2_managed_prefix_list.cloudfront.id]
-  security_group_id = aws_security_group.opxs_vpc.id
-}
-
-resource "aws_security_group_rule" "ingress_from_cloudfront_https_sg_rule" {
-  type              = "ingress"
-  from_port         = 443
-  to_port           = 443
+  from_port         = 0
+  to_port           = 65535
   protocol          = "tcp"
   prefix_list_ids   = [data.aws_ec2_managed_prefix_list.cloudfront.id]
   security_group_id = aws_security_group.opxs_vpc.id
