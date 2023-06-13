@@ -65,7 +65,7 @@ resource "aws_ecs_task_definition" "opxs_api" {
     "essential": true,
     "environment": [
       { "name": "RUN_MODE", "value": "dev" }
-    ],
+    ]
   }
 ]
 EOF
