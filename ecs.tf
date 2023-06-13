@@ -33,7 +33,7 @@ resource "aws_ecs_service" "opxs_api" {
   name            = "opxs-api"
   task_definition = aws_ecs_task_definition.opxs_api.arn
   cluster         = aws_ecs_cluster.opxs_api_cluster.arn
-  desired_count   = 0
+  desired_count   = 1
 
   capacity_provider_strategy {
     capacity_provider = aws_ecs_capacity_provider.opxs_api_cluster_ec2.name
@@ -53,7 +53,19 @@ resource "aws_ecs_task_definition" "opxs_api" {
     "name": "opxs-api",
     "image": "${aws_ecr_repository.opxs_api.repository_url}:latest",
     "memory": 128,
+    "portMappings": [
+      {
+        "name": "opxs-api-8080-tcp",
+        "containerPort": 8080,
+        "hostPort": 8080,
+        "protocol": "tcp",
+        "appProtocol": "http"
+      }
+    ],
     "essential": true,
+    "environment": [
+      { "name": "RUN_MODE", "value": "dev" }
+    ],
     "command": ["tail", "-f", "/dev/null"]
   }
 ]
@@ -62,4 +74,5 @@ EOF
   cpu                      = "128"
   memory                   = "128"
   requires_compatibilities = ["EC2"]
+  execution_role_arn       = aws_iam_role.opxs_api_ecs_tasks_execution_role
 }
