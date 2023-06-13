@@ -6,7 +6,7 @@ resource "aws_route53_zone" "opxs" {
   name = "${var.run_mode}.${var.domain}"
 }
 
-resource "aws_route53_record" "opxs" {
+resource "aws_route53_record" "opxs_for_a_record" {
   zone_id = aws_route53_zone.opxs.zone_id
   name    = aws_route53_zone.opxs.name
   type    = "A"
@@ -17,7 +17,7 @@ resource "aws_route53_record" "opxs" {
   }
 }
 
-resource "aws_route53_record" "opxs_dns_verify" {
+resource "aws_route53_record" "opxs_for_verify" {
   for_each = {
     for dvo in aws_acm_certificate.opxs.domain_validation_options : dvo.domain_name => {
       name   = dvo.resource_record_name
@@ -44,7 +44,7 @@ resource "aws_acm_certificate" "opxs" {
 
 resource "aws_acm_certificate_validation" "opxs" {
   certificate_arn         = aws_acm_certificate.opxs.arn
-  validation_record_fqdns = [for record in aws_route53_record.opxs_dns_verify : record.fqdn]
+  validation_record_fqdns = [for record in aws_route53_record.opxs_for_verify : record.fqdn]
 }
 
 ##################################################
@@ -59,7 +59,20 @@ data "aws_lb" "opxs" {
   arn = aws_lb.opxs.arn
 }
 
-resource "aws_route53_record" "opxs_api" {
+resource "aws_route53_record" "opxs_api_for_subdomain" {
+  zone_id = aws_route53_zone.opxs.zone_id
+  name    = aws_route53_zone.opxs.name
+  records = [
+    aws_route53_zone.opxs_api.name_servers[0],
+    aws_route53_zone.opxs_api.name_servers[1],
+    aws_route53_zone.opxs_api.name_servers[2],
+    aws_route53_zone.opxs_api.name_servers[3]
+  ]
+  ttl  = 300
+  type = "NS"
+}
+
+resource "aws_route53_record" "opxs_api_for_a_record" {
   zone_id = aws_route53_zone.opxs_api.zone_id
   name    = aws_route53_zone.opxs_api.name
   type    = "A"
@@ -70,7 +83,7 @@ resource "aws_route53_record" "opxs_api" {
   }
 }
 
-resource "aws_route53_record" "opxs_api_dns_verify" {
+resource "aws_route53_record" "opxs_api_for_verify" {
   for_each = {
     for dvo in aws_acm_certificate.opxs_api.domain_validation_options : dvo.domain_name => {
       name   = dvo.resource_record_name
@@ -97,5 +110,5 @@ resource "aws_acm_certificate" "opxs_api" {
 
 resource "aws_acm_certificate_validation" "opxs_api" {
   certificate_arn         = aws_acm_certificate.opxs_api.arn
-  validation_record_fqdns = [for record in aws_route53_record.opxs_api_dns_verify : record.fqdn]
+  validation_record_fqdns = [for record in aws_route53_record.opxs_api_for_verify : record.fqdn]
 }
