@@ -59,7 +59,7 @@ resource "aws_ecs_task_definition" "opxs_api" {
       {
         "name": "opxs-api-8080-tcp",
         "containerPort": 8080,
-        "hostPort": 8080,
+        "hostPort": 0,
         "protocol": "tcp",
         "appProtocol": "http"
       }
