@@ -65,7 +65,15 @@ resource "aws_ecs_task_definition" "opxs_api" {
     "essential": true,
     "environment": [
       { "name": "RUN_MODE", "value": "dev" }
-    ]
+    ],
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-group": "${aws_cloudwatch_log_group.name}",
+        "awslogs-region": "${var.region}",
+        "awslogs-stream-prefix": "ecs"
+      }
+    }
   }
 ]
 EOF
@@ -74,4 +82,8 @@ EOF
   memory                   = "128"
   requires_compatibilities = ["EC2"]
   execution_role_arn       = aws_iam_role.opxs_api_ecs_tasks_execution_role.arn
+}
+
+resource "aws_cloudwatch_log_group" "opxs_api" {
+  name = "opxs-api-task-group"
 }
