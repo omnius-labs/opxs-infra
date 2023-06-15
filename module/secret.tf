@@ -1,11 +1,7 @@
-variable "opxs_api_postgres_user" {}
-variable "opxs_api_postgres_password" {}
-variable "opxs_api_jwt_secret" {}
-
 locals {
   opxs_api_secrets = {
-    postgres_user     = var.opxs_api_postgres_user
-    postgres_password = var.opxs_api_postgres_password
+    postgres_user     = var.postgres_user
+    postgres_password = var.postgres_password
     jwt_secret        = var.opxs_api_jwt_secret
   }
 }

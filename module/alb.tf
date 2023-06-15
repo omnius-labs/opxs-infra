@@ -3,7 +3,7 @@ resource "aws_lb" "opxs" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.opxs_alb.id]
-  subnets            = [aws_subnet.opxs_public_1a.id, aws_subnet.opxs_public_1c.id]
+  subnets            = [aws_subnet.opxs_public_1.id, aws_subnet.opxs_public_2.id]
 
   enable_deletion_protection = false
 }

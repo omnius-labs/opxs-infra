@@ -3,7 +3,7 @@
 ##################################################
 
 resource "aws_route53_zone" "opxs" {
-  name = "${var.run_mode}.${var.domain}"
+  name = var.domain
 }
 
 resource "aws_route53_record" "opxs_for_a_record" {
@@ -51,7 +51,7 @@ resource "aws_acm_certificate_validation" "opxs" {
 ##################################################
 
 resource "aws_route53_zone" "opxs_api" {
-  name = "api.${var.run_mode}.${var.domain}"
+  name = "api.${var.domain}"
 }
 
 data "aws_lb" "opxs" {

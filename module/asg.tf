@@ -10,7 +10,7 @@ resource "aws_autoscaling_group" "opxs_api_ecs_asg" {
   max_size = 2
   min_size = 0
 
-  vpc_zone_identifier = [aws_subnet.opxs_public_1a.id, aws_subnet.opxs_public_1c.id]
+  vpc_zone_identifier = [aws_subnet.opxs_public_1.id, aws_subnet.opxs_public_2.id]
 
   mixed_instances_policy {
     launch_template {
