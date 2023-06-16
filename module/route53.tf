@@ -1,5 +1,5 @@
 ##################################################
-# [dev/stg/prod].opxs.omnius-labs.com
+# root
 ##################################################
 
 resource "aws_route53_zone" "opxs" {
@@ -47,7 +47,7 @@ resource "aws_acm_certificate_validation" "opxs" {
 }
 
 ##################################################
-# api.[dev/stg/prod].opxs.omnius-labs.com
+# api
 ##################################################
 
 resource "aws_route53_zone" "opxs_api" {
