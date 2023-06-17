@@ -34,6 +34,10 @@ resource "aws_cloudfront_distribution" "opxs" {
         forward = "none"
       }
     }
+    function_association {
+      event_type   = "viewer-request"
+      function_arn = aws_cloudfront_function.url_normalization.arn
+    }
     min_ttl                = 0
     default_ttl            = 3600
     max_ttl                = 86400
@@ -73,4 +77,25 @@ resource "aws_cloudfront_distribution" "opxs" {
     ssl_support_method       = "sni-only"
     minimum_protocol_version = "TLSv1"
   }
+}
+
+resource "aws_cloudfront_function" "url_normalization" {
+  name    = "url_normalization"
+  runtime = "cloudfront-js-1.0"
+  comment = "Appends index.html to request URLs"
+  publish = true
+  code    = <<EOF
+function handler(event) {
+    var request = event.request;
+    var uri = request.uri;
+
+    if (uri.endsWith('/')) {
+        request.uri += 'index.html';
+    } else if (!uri.includes('.')) {
+        request.uri += '/index.html';
+    }
+
+    return request;
+}
+  EOF
 }
