@@ -1,5 +1,5 @@
 resource "aws_route53_zone" "opxs" {
-  name = var.sub_domain_name
+  name = var.domain_name
 }
 
 resource "aws_route53_record" "opxs_for_a_record" {
@@ -46,7 +46,7 @@ resource "aws_route53_record" "opxs_for_verify" {
 
 resource "aws_acm_certificate" "opxs" {
   domain_name               = aws_route53_zone.opxs.name
-  subject_alternative_names = [var.domain_name, "*.${var.sub_domain_name}"]
+  subject_alternative_names = ["*.${var.domain_name}"]
   validation_method         = "DNS"
   lifecycle {
     create_before_destroy = true

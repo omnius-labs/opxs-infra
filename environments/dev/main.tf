@@ -19,8 +19,7 @@ provider "aws" {
 module "opxs" {
   source = "../../module"
 
-  domain_name     = "omnius-labs.com"
-  sub_domain_name = "opxs-dev.omnius-labs.com"
+  domain_name     = "opxs-dev.omnius-labs.com"
   api_domain_name = "api.opxs-dev.omnius-labs.com"
 
   run_mode = "dev"
