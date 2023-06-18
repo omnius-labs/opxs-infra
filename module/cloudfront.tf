@@ -11,7 +11,8 @@ resource "aws_cloudfront_distribution" "opxs" {
     }
   }
   origin {
-    domain_name = aws_route53_zone.opxs_api.name
+
+    domain_name = var.api_domain_name
     origin_id   = "opxs-api-alb"
     custom_origin_config {
       http_port              = 80

@@ -51,7 +51,7 @@ resource "aws_lb_listener" "opxs_api_https" {
   port              = 443
   protocol          = "HTTPS"
   ssl_policy        = "ELBSecurityPolicy-2016-08"
-  certificate_arn   = aws_acm_certificate.opxs_api.arn
+  certificate_arn   = aws_acm_certificate.opxs.arn
   default_action {
     type = "fixed-response"
     fixed_response {
