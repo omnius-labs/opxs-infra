@@ -1,8 +1,10 @@
 locals {
   opxs_api_secrets = {
-    postgres_user     = var.postgres_user
-    postgres_password = var.postgres_password
-    jwt_secret        = var.opxs_api_jwt_secret
+    postgres_user             = var.postgres_user
+    postgres_password         = var.postgres_password
+    jwt_secret                = var.opxs_api_jwt_secret
+    auth_google_client_id     = var.auth_google_client_id
+    auth_google_client_secret = var.auth_google_client_secret
   }
 }
 

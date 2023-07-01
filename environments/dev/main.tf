@@ -28,7 +28,9 @@ module "opxs" {
   subnet_public_1 = "us-east-1a"
   subnet_public_2 = "us-east-1b"
 
-  postgres_user       = var.postgres_user
-  postgres_password   = var.postgres_password
-  opxs_api_jwt_secret = var.opxs_api_jwt_secret
+  postgres_user             = var.postgres_user
+  postgres_password         = var.postgres_password
+  opxs_api_jwt_secret       = var.opxs_api_jwt_secret
+  auth_google_client_id     = var.auth_google_client_id
+  auth_google_client_secret = var.auth_google_client_secret
 }
