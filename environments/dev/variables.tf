@@ -6,7 +6,11 @@ variable "postgres_password" {
   type = string
 }
 
-variable "opxs_api_jwt_secret" {
+variable "jwt_secret_current" {
+  type = string
+}
+
+variable "jwt_secret_retired" {
   type = string
 }
 
