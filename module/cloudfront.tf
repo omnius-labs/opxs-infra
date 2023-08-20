@@ -48,10 +48,11 @@ resource "aws_cloudfront_distribution" "opxs" {
   ordered_cache_behavior {
     path_pattern     = "/api/*"
     allowed_methods  = ["HEAD", "DELETE", "POST", "GET", "OPTIONS", "PUT", "PATCH"]
-    cached_methods   = ["HEAD", "GET", "OPTIONS"]
+    cached_methods   = ["HEAD", "GET"]
     target_origin_id = "opxs-api-alb"
     forwarded_values {
-      query_string = false
+      query_string = true
+      headers      = ["Authorization"]
       cookies {
         forward = "all"
       }
