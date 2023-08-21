@@ -40,8 +40,8 @@ resource "aws_cloudfront_distribution" "opxs" {
       function_arn = aws_cloudfront_function.url_normalization.arn
     }
     min_ttl                = 0
-    default_ttl            = 10
-    max_ttl                = 10
+    default_ttl            = 3600
+    max_ttl                = 86400
     compress               = true
     viewer_protocol_policy = "redirect-to-https"
   }
