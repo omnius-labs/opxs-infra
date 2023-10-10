@@ -49,7 +49,7 @@ resource "aws_launch_template" "opxs_api" {
   ebs_optimized = true
   user_data = base64encode(<<EOF
 #!/bin/bash
-echo 'ECS_CLUSTER=opxs-api-cluster' >> /etc/ecs/ecs.config
+echo 'ECS_CLUSTER=opxs-api-ecs-cluster' >> /etc/ecs/ecs.config
 EOF
   )
 
