@@ -1,5 +1,5 @@
 resource "aws_ecs_cluster" "opxs_api_cluster" {
-  name = "opxs-api-cluster"
+  name = "opxs-api-ecs-cluster"
 }
 
 resource "aws_ecs_cluster_capacity_providers" "opxs_api_cluster_ec2" {
@@ -14,7 +14,7 @@ resource "aws_ecs_cluster_capacity_providers" "opxs_api_cluster_ec2" {
 
 resource "aws_ecs_capacity_provider" "opxs_api_cluster_ec2" {
   # Currentry, we cannot delete capacity provider. If you exec 'terraform destroy', you can delete resouce only on tfstate.
-  name = "opxs-api-cluster-ec2"
+  name = "opxs-api-ecs-cluster-ec2"
 
   auto_scaling_group_provider {
     auto_scaling_group_arn         = aws_autoscaling_group.opxs_api_ecs_asg.arn
@@ -30,7 +30,7 @@ resource "aws_ecs_capacity_provider" "opxs_api_cluster_ec2" {
 }
 
 resource "aws_ecs_service" "opxs_api" {
-  name            = "opxs-api-service"
+  name            = "opxs-api-ecs-service"
   task_definition = aws_ecs_task_definition.opxs_api.arn
   cluster         = aws_ecs_cluster.opxs_api_cluster.arn
   desired_count   = 1
