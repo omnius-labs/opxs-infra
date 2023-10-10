@@ -30,7 +30,7 @@ resource "aws_ecs_capacity_provider" "opxs_api_cluster_ec2" {
 }
 
 resource "aws_ecs_service" "opxs_api" {
-  name            = "opxs-api"
+  name            = "opxs-api-service"
   task_definition = aws_ecs_task_definition.opxs_api.arn
   cluster         = aws_ecs_cluster.opxs_api_cluster.arn
   desired_count   = 1

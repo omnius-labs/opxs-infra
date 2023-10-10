@@ -1,5 +1,5 @@
 resource "aws_ecr_repository" "opxs_api" {
-  name = "opxs-api"
+  name = "opxs-api-ecr"
 }
 
 locals {
