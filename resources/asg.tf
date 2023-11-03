@@ -41,7 +41,7 @@ resource "aws_launch_template" "opxs_api" {
   block_device_mappings {
     device_name = "/dev/sda1"
     ebs {
-      volume_size = 20
+      volume_size = 5
       volume_type = "gp3"
     }
   }
