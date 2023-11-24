@@ -96,6 +96,11 @@ resource "aws_iam_policy" "opxs_api_ecs_task" {
       ],
       "Resource": "${aws_secretsmanager_secret.opxs_api.id}"
     }
+    {
+      "Effect": "Allow",
+      "Action": "sqs:SendMessage",
+      "Resource": "*"
+    }
   ]
 }
 EOF
