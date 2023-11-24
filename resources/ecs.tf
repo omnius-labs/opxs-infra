@@ -90,6 +90,6 @@ EOF
 }
 
 resource "aws_cloudwatch_log_group" "opxs_api" {
-  name              = "/aws/opxs-api/task-group"
+  name              = "/aws/opxs-api-task/task-group"
   retention_in_days = 3
 }
