@@ -38,14 +38,6 @@ resource "aws_launch_template" "opxs_api" {
   vpc_security_group_ids = [aws_security_group.opxs_api_ecs_ec2.id]
   instance_type          = "t3.nano"
 
-  block_device_mappings {
-    device_name = "/dev/sda1"
-    ebs {
-      volume_size = 20
-      volume_type = "gp3"
-    }
-  }
-
   ebs_optimized = true
   user_data = base64encode(<<EOF
 #!/bin/bash
