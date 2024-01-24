@@ -20,7 +20,7 @@ module "nat" {
 }
 
 resource "aws_internet_gateway" "opxs" {
-  vpc_id = aws_vpc.opxs.id
+  vpc_id = module.vpc.vpc_id
 }
 
 resource "aws_route_table" "opxs" {

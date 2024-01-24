@@ -10,7 +10,7 @@ resource "aws_lb" "opxs" {
 
 resource "aws_security_group" "opxs_alb" {
   name   = "opxs-alb-sg"
-  vpc_id = aws_vpc.opxs.id
+  vpc_id = module.vpc.vpc_id
   egress {
     from_port   = 0
     to_port     = 0
@@ -79,7 +79,7 @@ resource "aws_lb_target_group" "opxs_api" {
   name                 = "opxs-api-tg"
   port                 = 8080
   protocol             = "HTTP"
-  vpc_id               = aws_vpc.opxs.id
+  vpc_id               = module.vpc.vpc_id
   deregistration_delay = 60
   stickiness {
     type            = "lb_cookie"

@@ -66,7 +66,7 @@ EOF
 
 resource "aws_security_group" "opxs_api_ecs_ec2" {
   name   = "opxs-api-ecs-ec2-sg"
-  vpc_id = aws_vpc.opxs.id
+  vpc_id = module.vpc.vpc_id
   ingress {
     from_port       = 0
     to_port         = 0
