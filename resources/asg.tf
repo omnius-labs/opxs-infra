@@ -1,7 +1,7 @@
 data "aws_ssm_parameter" "ecs_optimized_ami" {
   # Get latest ecs optimized ami
   # https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/developerguide/ecs-optimized_AMI.html
-  name = "/aws/service/ecs/optimized-ami/amazon-linux-2/recommended/image_id"
+  name = "/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-6.1-x86_64"
 }
 
 resource "aws_autoscaling_group" "opxs_api_ecs_asg" {
@@ -10,7 +10,7 @@ resource "aws_autoscaling_group" "opxs_api_ecs_asg" {
   max_size = 2
   min_size = 0
 
-  vpc_zone_identifier = [aws_subnet.opxs_public_1.id, aws_subnet.opxs_public_2.id]
+  vpc_zone_identifier = module.vpc.private_subnets
 
   mixed_instances_policy {
     launch_template {

@@ -25,8 +25,8 @@ module "opxs" {
   run_mode = "dev"
   region   = "us-east-1"
 
-  subnet_public_1 = "us-east-1a"
-  subnet_public_2 = "us-east-1b"
+  availability_zone_1 = "us-east-1a"
+  availability_zone_2 = "us-east-1b"
 
   postgres_user             = var.postgres_user
   postgres_password         = var.postgres_password

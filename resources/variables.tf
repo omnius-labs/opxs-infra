@@ -14,11 +14,11 @@ variable "region" {
   type = string
 }
 
-variable "subnet_public_1" {
+variable "availability_zone_1" {
   type = string
 }
 
-variable "subnet_public_2" {
+variable "availability_zone_2" {
   type = string
 }
 
