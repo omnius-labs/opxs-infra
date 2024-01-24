@@ -1,7 +1,7 @@
 data "aws_ssm_parameter" "ecs_optimized_ami" {
   # Get latest ecs optimized ami
   # https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/developerguide/ecs-optimized_AMI.html
-  name = "/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-6.1-x86_64"
+  name = "/aws/service/ecs/optimized-ami/amazon-linux-2023/recommended/image_id"
 }
 
 resource "aws_autoscaling_group" "opxs_api_ecs_asg" {
