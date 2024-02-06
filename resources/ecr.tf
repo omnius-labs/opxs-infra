@@ -10,8 +10,8 @@ resource "aws_ecr_repository" "opxs_batch_email_send_feedback" {
   name = "opxs-batch-email-send-feedback-lambda-ecr"
 }
 
-resource "aws_ecr_repository" "opxs_batch_file_convert" {
-  name = "opxs-batch-file-convert-lambda-ecr"
+resource "aws_ecr_repository" "opxs_batch_image_convert" {
+  name = "opxs-batch-image-convert-lambda-ecr"
 }
 
 locals {
@@ -48,7 +48,7 @@ resource "aws_ecr_lifecycle_policy" "opxs_batch_email_send_feedback" {
   policy     = jsonencode(local.ecr-lifecycle-policy)
 }
 
-resource "aws_ecr_lifecycle_policy" "opxs_batch_file_convert" {
-  repository = aws_ecr_repository.opxs_batch_file_convert.name
+resource "aws_ecr_lifecycle_policy" "opxs_batch_image_convert" {
+  repository = aws_ecr_repository.opxs_batch_image_convert.name
   policy     = jsonencode(local.ecr-lifecycle-policy)
 }
