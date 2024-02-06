@@ -100,6 +100,14 @@ resource "aws_iam_policy" "opxs_api_ecs_task" {
       "Effect": "Allow",
       "Action": "sqs:SendMessage",
       "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:PutObject",
+        "s3:GetObject"
+      ],
+      "Resource": "arn:aws:s3:::opxs.v1.dev.image-convert/*"
     }
   ]
 }
