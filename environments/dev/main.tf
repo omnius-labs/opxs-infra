@@ -1,4 +1,5 @@
 terraform {
+  required_version = "~> 1.4.4"
   cloud {
     organization = "omnius-labs"
     workspaces {
@@ -35,3 +36,8 @@ module "opxs" {
   auth_google_client_id     = var.auth_google_client_id
   auth_google_client_secret = var.auth_google_client_secret
 }
+
+# resource "aws_lambda_function" "opxs_batch_email_send_lambda" {
+#   function_name = "opxs-batch-email-send-lambda"
+#   role          = aws_iam_role.lambda_role.arn
+# }
