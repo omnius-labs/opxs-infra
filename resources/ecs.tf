@@ -68,13 +68,13 @@ resource "aws_ecs_task_definition" "opxs_api" {
     "environment": [
       { "name": "RUN_MODE", "value": "dev" },
       { "name": "RUST_BACKTRACE", "value": "full" },
-      { "name": "AWS_REGION", "value": "${var.region}" }
+      { "name": "AWS_REGION", "value": "${var.aws_region}" }
     ],
     "logConfiguration": {
       "logDriver": "awslogs",
       "options": {
         "awslogs-group": "${aws_cloudwatch_log_group.opxs_api.name}",
-        "awslogs-region": "${var.region}",
+        "awslogs-region": "${var.aws_region}",
         "awslogs-stream-prefix": "ecs"
       }
     }

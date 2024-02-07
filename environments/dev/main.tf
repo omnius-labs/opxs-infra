@@ -20,14 +20,15 @@ provider "aws" {
 module "opxs" {
   source = "../../resources"
 
-  domain_name     = "opxs-dev.omnius-labs.com"
-  api_domain_name = "api.opxs-dev.omnius-labs.com"
-
-  run_mode = "dev"
-  region   = "us-east-1"
+  run_mode       = "dev"
+  aws_account_id = "464209738056"
+  aws_region     = "us-east-1"
 
   availability_zone_1 = "us-east-1a"
   availability_zone_2 = "us-east-1b"
+
+  domain_name     = "opxs-dev.omnius-labs.com"
+  api_domain_name = "api.opxs-dev.omnius-labs.com"
 
   postgres_user             = var.postgres_user
   postgres_password         = var.postgres_password
@@ -36,8 +37,3 @@ module "opxs" {
   auth_google_client_id     = var.auth_google_client_id
   auth_google_client_secret = var.auth_google_client_secret
 }
-
-# resource "aws_lambda_function" "opxs_batch_email_send_lambda" {
-#   function_name = "opxs-batch-email-send-lambda"
-#   role          = aws_iam_role.lambda_role.arn
-# }
