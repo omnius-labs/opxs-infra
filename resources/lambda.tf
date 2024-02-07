@@ -2,7 +2,7 @@ resource "aws_lambda_function" "opxs_batch_email_send_lambda" {
   function_name = "opxs-batch-email-send-lambda"
   role          = aws_iam_role.opxs_batch_email_send_lambda_role.arn
   package_type  = "Image"
-  image_uri     = aws_ecr_repository.opxs_batch_email_send.repository_url
+  image_uri     = "${aws_ecr_repository.opxs_batch_email_send.repository_url}:latest"
   memory_size   = 128
   timeout       = 60
   environment {
@@ -18,7 +18,9 @@ resource "aws_lambda_function" "opxs_batch_email_send_lambda" {
     subnet_ids         = module.vpc.private_subnets
     security_group_ids = [aws_security_group.opxs_lambda.id]
   }
-
+  lifecycle {
+    ignore_changes = [image_uri]
+  }
 }
 
 resource "aws_iam_role" "opxs_batch_email_send_lambda_role" {
@@ -105,7 +107,7 @@ resource "aws_lambda_function" "opxs_batch_email_send_feedback_lambda" {
   function_name = "opxs-batch-email-send-feedback-lambda"
   role          = aws_iam_role.opxs_batch_email_send_feedback_lambda_role.arn
   package_type  = "Image"
-  image_uri     = aws_ecr_repository.opxs_batch_email_send_feedback.repository_url
+  image_uri     = "${aws_ecr_repository.opxs_batch_email_send_feedback.repository_url}:latest"
   memory_size   = 128
   timeout       = 60
   environment {
@@ -121,7 +123,9 @@ resource "aws_lambda_function" "opxs_batch_email_send_feedback_lambda" {
     subnet_ids         = module.vpc.private_subnets
     security_group_ids = [aws_security_group.opxs_lambda.id]
   }
-
+  lifecycle {
+    ignore_changes = [image_uri]
+  }
 }
 
 resource "aws_iam_role" "opxs_batch_email_send_feedback_lambda_role" {
@@ -199,7 +203,7 @@ resource "aws_lambda_function" "opxs_batch_image_convert_lambda" {
   function_name = "opxs-batch-image-convert-lambda"
   role          = aws_iam_role.opxs_batch_image_convert_lambda_role.arn
   package_type  = "Image"
-  image_uri     = aws_ecr_repository.opxs_batch_image_convert.repository_url
+  image_uri     = "${aws_ecr_repository.opxs_batch_image_convert.repository_url}:latest"
   memory_size   = 1024
   timeout       = 180
   environment {
@@ -215,7 +219,9 @@ resource "aws_lambda_function" "opxs_batch_image_convert_lambda" {
     subnet_ids         = module.vpc.private_subnets
     security_group_ids = [aws_security_group.opxs_lambda.id]
   }
-
+  lifecycle {
+    ignore_changes = [image_uri]
+  }
 }
 
 resource "aws_iam_role" "opxs_batch_image_convert_lambda_role" {
