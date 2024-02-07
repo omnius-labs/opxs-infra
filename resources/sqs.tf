@@ -23,31 +23,6 @@ resource "aws_lambda_event_source_mapping" "opxs_batch_email_send_lambda" {
   function_name    = aws_lambda_function.opxs_batch_email_send_lambda.arn
 }
 
-resource "aws_sqs_queue" "opxs_batch_email_send_feedback_sqs" {
-  name                       = "opxs-batch-email-send-feedback-sqs"
-  message_retention_seconds  = 60 * 60 * 24 * 4
-  visibility_timeout_seconds = 60 * 15 + 10
-  receive_wait_time_seconds  = 5
-
-  redrive_policy = jsonencode({
-    deadLetterTargetArn = aws_sqs_queue.opxs_batch_email_send_feedback_error_sqs.arn
-    maxReceiveCount     = 2
-  })
-}
-
-resource "aws_sqs_queue" "opxs_batch_email_send_feedback_error_sqs" {
-  name                       = "opxs-batch-email-send-feedback-error-sqs"
-  message_retention_seconds  = 60 * 60 * 24 * 4
-  visibility_timeout_seconds = 60 * 15 + 10
-  receive_wait_time_seconds  = 5
-}
-
-resource "aws_lambda_event_source_mapping" "opxs_batch_email_send_feedback_lambda" {
-  batch_size       = 1
-  event_source_arn = aws_sqs_queue.opxs_batch_email_send_feedback_sqs.arn
-  function_name    = aws_lambda_function.opxs_batch_email_send_feedback_lambda.arn
-}
-
 resource "aws_sqs_queue" "opxs_batch_image_convert_sqs" {
   name                       = "opxs-batch-image-convert-sqs"
   message_retention_seconds  = 60 * 60 * 24 * 4
