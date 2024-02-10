@@ -198,7 +198,7 @@ resource "aws_iam_policy" "opxs_api_ecs_task" {
         "s3:PutObject",
         "s3:GetObject"
       ],
-      "Resource": "arn:aws:s3:::opxs.v1.dev.image-convert/*"
+      "Resource": "arn:aws:s3:::opxs.v1.${var.run_mode}.image-convert/*"
     }
   ]
 }

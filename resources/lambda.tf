@@ -1,5 +1,11 @@
+locals {
+  opxs_batch_email_send_lambda_name          = "opxs-batch-email-send-lambda"
+  opxs_batch_email_send_feedback_lambda_name = "opxs-batch-email-send-feedback-lambda"
+  opxs_batch_image_convert_lambda_name       = "opxs-batch-image-convert-lambda"
+}
+
 resource "aws_lambda_function" "opxs_batch_email_send_lambda" {
-  function_name = "opxs-batch-email-send-lambda"
+  function_name = local.opxs_batch_email_send_lambda_name
   role          = aws_iam_role.opxs_batch_email_send_lambda_role.arn
   package_type  = "Image"
   image_uri     = "${aws_ecr_repository.opxs_batch_email_send.repository_url}:latest"
@@ -21,6 +27,7 @@ resource "aws_lambda_function" "opxs_batch_email_send_lambda" {
   lifecycle {
     ignore_changes = [image_uri]
   }
+  depends_on = [aws_cloudwatch_log_group.opxs_batch_email_send_lambda_log_group]
 }
 
 resource "aws_iam_role" "opxs_batch_email_send_lambda_role" {
@@ -99,12 +106,12 @@ resource "aws_iam_role_policy_attachment" "opxs_batch_email_send_lambda_policy_a
 }
 
 resource "aws_cloudwatch_log_group" "opxs_batch_email_send_lambda_log_group" {
-  name              = "/aws/lambda/${aws_lambda_function.opxs_batch_email_send_lambda.function_name}"
+  name              = "/aws/lambda/${local.opxs_batch_email_send_lambda_name}"
   retention_in_days = 3
 }
 
 resource "aws_lambda_function" "opxs_batch_email_send_feedback_lambda" {
-  function_name = "opxs-batch-email-send-feedback-lambda"
+  function_name = local.opxs_batch_email_send_feedback_lambda_name
   role          = aws_iam_role.opxs_batch_email_send_feedback_lambda_role.arn
   package_type  = "Image"
   image_uri     = "${aws_ecr_repository.opxs_batch_email_send_feedback.repository_url}:latest"
@@ -126,6 +133,7 @@ resource "aws_lambda_function" "opxs_batch_email_send_feedback_lambda" {
   lifecycle {
     ignore_changes = [image_uri]
   }
+  depends_on = [aws_cloudwatch_log_group.opxs_batch_email_send_feedback_lambda_log_group]
 }
 
 resource "aws_iam_role" "opxs_batch_email_send_feedback_lambda_role" {
@@ -195,12 +203,12 @@ resource "aws_iam_role_policy_attachment" "opxs_batch_email_send_feedback_lambda
 }
 
 resource "aws_cloudwatch_log_group" "opxs_batch_email_send_feedback_lambda_log_group" {
-  name              = "/aws/lambda/${aws_lambda_function.opxs_batch_email_send_feedback_lambda.function_name}"
+  name              = "/aws/lambda/${local.opxs_batch_email_send_feedback_lambda_name}"
   retention_in_days = 3
 }
 
 resource "aws_lambda_function" "opxs_batch_image_convert_lambda" {
-  function_name = "opxs-batch-image-convert-lambda"
+  function_name = local.opxs_batch_image_convert_lambda_name
   role          = aws_iam_role.opxs_batch_image_convert_lambda_role.arn
   package_type  = "Image"
   image_uri     = "${aws_ecr_repository.opxs_batch_image_convert.repository_url}:latest"
@@ -222,6 +230,7 @@ resource "aws_lambda_function" "opxs_batch_image_convert_lambda" {
   lifecycle {
     ignore_changes = [image_uri]
   }
+  depends_on = [aws_cloudwatch_log_group.opxs_batch_image_convert_lambda_log_group]
 }
 
 resource "aws_iam_role" "opxs_batch_image_convert_lambda_role" {
@@ -282,7 +291,7 @@ resource "aws_iam_policy" "opxs_batch_image_convert_lambda_policy" {
                 "s3:GetObject"
             ],
             "Resource": [
-                "arn:aws:s3:::opxs.v1.dev.image-convert/*"
+                "arn:aws:s3:::opxs.v1.${var.run_mode}.image-convert/*"
             ]
         },
 		{
@@ -303,7 +312,7 @@ resource "aws_iam_role_policy_attachment" "opxs_batch_image_convert_lambda_polic
 }
 
 resource "aws_cloudwatch_log_group" "opxs_batch_image_convert_lambda_log_group" {
-  name              = "/aws/lambda/${aws_lambda_function.opxs_batch_image_convert_lambda.function_name}"
+  name              = "/aws/lambda/${local.opxs_batch_image_convert_lambda_name}"
   retention_in_days = 3
 }
 
