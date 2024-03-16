@@ -30,6 +30,10 @@ resource "aws_autoscaling_group" "opxs_api_ecs_asg" {
 
   # If you enable managedTerminationProtection on capacity provider, you have to enable this.
   # protect_from_scale_in = true
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_launch_template" "opxs_api" {
@@ -65,6 +69,10 @@ EOF
 
   iam_instance_profile {
     arn = aws_iam_instance_profile.opxs_ecs_instance.arn
+  }
+
+  lifecycle {
+    create_before_destroy = true
   }
 }
 
