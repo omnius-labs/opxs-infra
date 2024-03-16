@@ -22,7 +22,8 @@ resource "aws_autoscaling_group" "opxs_api_ecs_asg" {
   }
 
   lifecycle {
-    ignore_changes = [desired_capacity, tag]
+    ignore_changes        = [desired_capacity, tag]
+    create_before_destroy = true
   }
 
   # Interval of scale in/out
@@ -30,10 +31,6 @@ resource "aws_autoscaling_group" "opxs_api_ecs_asg" {
 
   # If you enable managedTerminationProtection on capacity provider, you have to enable this.
   # protect_from_scale_in = true
-
-  lifecycle {
-    create_before_destroy = true
-  }
 }
 
 resource "aws_launch_template" "opxs_api" {
