@@ -10,14 +10,13 @@ module "vpc" {
 }
 
 module "nat" {
-  source = "int128/nat-instance/aws"
+  source = "github.com/lyrise/terraform-aws-nat-instance"
 
   name                        = "main"
   vpc_id                      = module.vpc.vpc_id
   public_subnet               = module.vpc.public_subnets[0]
   private_subnets_cidr_blocks = module.vpc.private_subnets_cidr_blocks
   private_route_table_ids     = module.vpc.private_route_table_ids
-  image_id                    = data.aws_ssm_parameter.ecs_optimized_ami.value
 }
 
 resource "aws_eip" "nat" {
