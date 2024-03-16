@@ -45,11 +45,6 @@ echo 'ECS_CLUSTER=opxs-api-ecs-cluster' >> /etc/ecs/ecs.config
 EOF
   )
 
-  network_interfaces {
-    associate_public_ip_address = false
-    security_groups             = [aws_security_group.opxs_api_ecs_ec2.id]
-  }
-
   tag_specifications {
     resource_type = "instance"
     tags = {
