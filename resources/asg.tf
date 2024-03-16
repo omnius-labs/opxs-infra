@@ -33,17 +33,30 @@ resource "aws_autoscaling_group" "opxs_api_ecs_asg" {
 }
 
 resource "aws_launch_template" "opxs_api" {
-  name                   = "opxs_api"
-  image_id               = data.aws_ssm_parameter.ecs_optimized_ami.value
-  vpc_security_group_ids = [aws_security_group.opxs_api_ecs_ec2.id]
-  instance_type          = "t3.nano"
+  name          = "opxs_api"
+  image_id      = data.aws_ssm_parameter.ecs_optimized_ami.value
+  instance_type = "t3.nano"
 
   ebs_optimized = true
   user_data = base64encode(<<EOF
 #!/bin/bash
 echo 'ECS_CLUSTER=opxs-api-ecs-cluster' >> /etc/ecs/ecs.config
+echo "ECS_WARM_POOLS_CHECK=true" >> /etc/ecs/ecs.config;
 EOF
   )
+
+  network_interfaces {
+    associate_public_ip_address = false
+    security_groups             = [aws_security_group.opxs_api_ecs_ec2.id]
+  }
+
+  iam_instance_profile {
+    arn = aws_iam_instance_profile.opxs_ecs_instance.arn
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
 
   tag_specifications {
     resource_type = "instance"
@@ -57,14 +70,6 @@ EOF
     tags = {
       Name = "opxs-api-ecs-instance"
     }
-  }
-
-  iam_instance_profile {
-    arn = aws_iam_instance_profile.opxs_ecs_instance.arn
-  }
-
-  lifecycle {
-    create_before_destroy = true
   }
 }
 
