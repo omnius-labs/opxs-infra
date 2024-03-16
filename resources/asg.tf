@@ -22,8 +22,7 @@ resource "aws_autoscaling_group" "opxs_api_ecs_asg" {
   }
 
   lifecycle {
-    ignore_changes        = [desired_capacity, tag]
-    create_before_destroy = true
+    ignore_changes = [desired_capacity, tag]
   }
 
   # Interval of scale in/out
