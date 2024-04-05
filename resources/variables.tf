@@ -49,3 +49,7 @@ variable "auth_google_client_id" {
 variable "auth_google_client_secret" {
   type = string
 }
+
+variable "discord_release_webhook_url" {
+  type = string
+}
