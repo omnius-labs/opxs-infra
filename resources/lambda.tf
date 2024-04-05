@@ -93,7 +93,7 @@ resource "aws_iam_policy" "opxs_batch_email_send_lambda_policy" {
 				"secretsmanager:GetSecretValue"
 			],
 			"Effect": "Allow",
-            "Resource": "${aws_secretsmanager_secret.opxs_api.id}"
+            "Resource": "${aws_secretsmanager_secret.opxs.id}"
 		}
 	]
 }
@@ -190,7 +190,7 @@ resource "aws_iam_policy" "opxs_batch_email_send_feedback_lambda_policy" {
 				"secretsmanager:GetSecretValue"
 			],
 			"Effect": "Allow",
-            "Resource": "${aws_secretsmanager_secret.opxs_api.id}"
+            "Resource": "${aws_secretsmanager_secret.opxs.id}"
 		}
 	]
 }
@@ -299,7 +299,7 @@ resource "aws_iam_policy" "opxs_batch_image_convert_lambda_policy" {
 				"secretsmanager:GetSecretValue"
 			],
 			"Effect": "Allow",
-            "Resource": "${aws_secretsmanager_secret.opxs_api.id}"
+            "Resource": "${aws_secretsmanager_secret.opxs.id}"
 		}
 	]
 }
