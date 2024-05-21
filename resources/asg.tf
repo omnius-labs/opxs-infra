@@ -73,6 +73,34 @@ EOF
   }
 }
 
+resource "aws_iam_role" "opxs_ecs_instance" {
+  name               = "opxs-ecs-instance-role"
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Principal": {
+        "Service": "ec2.amazonaws.com"
+      },
+      "Effect": "Allow",
+      "Sid": ""
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy_attachment" "opxs_ecs_instance" {
+  role       = aws_iam_role.opxs_ecs_instance.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role"
+}
+
+resource "aws_iam_instance_profile" "opxs_ecs_instance" {
+  role = aws_iam_role.opxs_ecs_instance.name
+}
+
 resource "aws_security_group" "opxs_api_ecs_ec2" {
   name   = "opxs-api-ecs-ec2-sg"
   vpc_id = module.vpc.vpc_id
