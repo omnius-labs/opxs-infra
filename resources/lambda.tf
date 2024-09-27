@@ -1,12 +1,12 @@
 locals {
-  opxs_api                                   = "opxs-api"
+  opxs_api_lambda_name                       = "opxs-api-lambda"
   opxs_batch_email_send_lambda_name          = "opxs-batch-email-send-lambda"
   opxs_batch_email_send_feedback_lambda_name = "opxs-batch-email-send-feedback-lambda"
   opxs_batch_image_convert_lambda_name       = "opxs-batch-image-convert-lambda"
 }
 
 resource "aws_lambda_function" "opxs_api" {
-  function_name = local.opxs_api
+  function_name = local.opxs_api_lambda_name
   role          = aws_iam_role.opxs_api_lambda.arn
   package_type  = "Image"
   image_uri     = "${aws_ecr_repository.opxs_api.repository_url}:latest"
@@ -97,7 +97,7 @@ resource "aws_iam_role_policy_attachment" "opxs_api_lambda" {
 }
 
 resource "aws_cloudwatch_log_group" "opxs_api_lambda" {
-  name              = "/aws/lambda/${local.opxs_api}"
+  name              = "/aws/lambda/${local.opxs_api_lambda_name}"
   retention_in_days = 3
 }
 
