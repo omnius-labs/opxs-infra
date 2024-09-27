@@ -65,7 +65,7 @@ resource "aws_iam_policy" "opxs_api_lambda" {
             "Action": [
                 "logs:CreateLogGroup",
                 "logs:CreateLogStream",
-                "logs:PutLogEvents",
+                "logs:PutLogEvents"
             ],
             "Resource": "*"
         },
