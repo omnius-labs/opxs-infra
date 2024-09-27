@@ -13,21 +13,6 @@ resource "aws_route53_record" "opxs_for_a_record" {
   }
 }
 
-data "aws_lb" "opxs" {
-  arn = aws_lb.opxs.arn
-}
-
-resource "aws_route53_record" "opxs_api_for_a_record" {
-  zone_id = aws_route53_zone.opxs.zone_id
-  name    = var.api_domain_name
-  type    = "A"
-  alias {
-    name                   = data.aws_lb.opxs.dns_name
-    zone_id                = data.aws_lb.opxs.zone_id
-    evaluate_target_health = false
-  }
-}
-
 resource "aws_route53_record" "opxs_for_verify" {
   for_each = {
     for dvo in aws_acm_certificate.opxs.domain_validation_options : dvo.domain_name => {

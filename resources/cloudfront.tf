@@ -11,9 +11,8 @@ resource "aws_cloudfront_distribution" "opxs" {
     }
   }
   origin {
-
-    domain_name = var.api_domain_name
-    origin_id   = "opxs-api-alb"
+    domain_name = "${aws_apigatewayv2_api.opxs_api.id}.execute-api.${var.aws_region}.amazonaws.com"
+    origin_id   = "opxs-api-gateway"
     custom_origin_config {
       http_port              = 80
       https_port             = 443
@@ -48,11 +47,10 @@ resource "aws_cloudfront_distribution" "opxs" {
   ordered_cache_behavior {
     path_pattern     = "/api/*"
     allowed_methods  = ["HEAD", "DELETE", "POST", "GET", "OPTIONS", "PUT", "PATCH"]
-    cached_methods   = ["HEAD", "GET"]
-    target_origin_id = "opxs-api-alb"
+    cached_methods   = ["HEAD", "GET", "OPTIONS"]
+    target_origin_id = "opxs-api-gateway"
     forwarded_values {
-      query_string = true
-      headers      = ["Authorization"]
+      query_string = false
       cookies {
         forward = "all"
       }

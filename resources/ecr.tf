@@ -1,5 +1,5 @@
 resource "aws_ecr_repository" "opxs_api" {
-  name = "opxs-api-ecs-ecr"
+  name = "opxs-api-lambda-ecs-ecr"
 }
 
 resource "aws_ecr_repository" "opxs_batch_email_send" {
