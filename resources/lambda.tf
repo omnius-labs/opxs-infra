@@ -65,17 +65,7 @@ resource "aws_iam_policy" "opxs_api_lambda" {
 			],
 			"Effect": "Allow",
             "Resource": "${aws_secretsmanager_secret.opxs.id}"
-		},
-        {
-            "Action": [
-                "execute-api:Invoke"
-            ],
-            "Effect": "Allow",
-            "Principal": {
-                "Service": "com.amazonaws.global.cloudfront.origin-facing"
-            },
-            "Resource": "arn:aws:execute-api:${var.aws_region}:${var.aws_account_id}:${aws_apigatewayv2_api.opxs_api.id}/*/*/*"
-        }
+		}
 	]
 }
 EOF
