@@ -59,16 +59,6 @@ resource "aws_iam_policy" "opxs_api_lambda" {
 {
 	"Version": "2012-10-17",
 	"Statement": [
-        {
-            "Sid": "AWSLambdaVPCAccessExecutionPermissions",
-            "Effect": "Allow",
-            "Action": [
-                "logs:CreateLogGroup",
-                "logs:CreateLogStream",
-                "logs:PutLogEvents"
-            ],
-            "Resource": "*"
-        },
 		{
 			"Action": [
 				"secretsmanager:GetSecretValue"
@@ -91,7 +81,12 @@ resource "aws_iam_policy" "opxs_api_lambda" {
 EOF
 }
 
-resource "aws_iam_role_policy_attachment" "opxs_api_lambda" {
+resource "aws_iam_role_policy_attachment" "opxs_api_lambda_basic" {
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+  role       = aws_iam_role.opxs_api_lambda.name
+}
+
+resource "aws_iam_role_policy_attachment" "opxs_api_lambda_additional" {
   role       = aws_iam_role.opxs_api_lambda.name
   policy_arn = aws_iam_policy.opxs_api_lambda.arn
 }
@@ -152,22 +147,6 @@ resource "aws_iam_policy" "opxs_batch_email_send_lambda_policy" {
 {
 	"Version": "2012-10-17",
 	"Statement": [
-        {
-            "Sid": "AWSLambdaVPCAccessExecutionPermissions",
-            "Effect": "Allow",
-            "Action": [
-                "logs:CreateLogGroup",
-                "logs:CreateLogStream",
-                "logs:PutLogEvents",
-                "ec2:CreateNetworkInterface",
-                "ec2:DescribeNetworkInterfaces",
-                "ec2:DescribeSubnets",
-                "ec2:DeleteNetworkInterface",
-                "ec2:AssignPrivateIpAddresses",
-                "ec2:UnassignPrivateIpAddresses"
-            ],
-            "Resource": "*"
-        },
 		{
 			"Effect": "Allow",
 			"Action": [
@@ -196,7 +175,12 @@ resource "aws_iam_policy" "opxs_batch_email_send_lambda_policy" {
 EOF
 }
 
-resource "aws_iam_role_policy_attachment" "opxs_batch_email_send_lambda_policy_attachment" {
+resource "aws_iam_role_policy_attachment" "opxs_batch_email_send_lambda_basic" {
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+  role       = aws_iam_role.opxs_batch_email_send_lambda_role.name
+}
+
+resource "aws_iam_role_policy_attachment" "opxs_batch_email_send_lambda_additional" {
   role       = aws_iam_role.opxs_batch_email_send_lambda_role.name
   policy_arn = aws_iam_policy.opxs_batch_email_send_lambda_policy.arn
 }
@@ -257,22 +241,6 @@ resource "aws_iam_policy" "opxs_batch_email_send_feedback_lambda_policy" {
 {
 	"Version": "2012-10-17",
 	"Statement": [
-        {
-            "Sid": "AWSLambdaVPCAccessExecutionPermissions",
-            "Effect": "Allow",
-            "Action": [
-                "logs:CreateLogGroup",
-                "logs:CreateLogStream",
-                "logs:PutLogEvents",
-                "ec2:CreateNetworkInterface",
-                "ec2:DescribeNetworkInterfaces",
-                "ec2:DescribeSubnets",
-                "ec2:DeleteNetworkInterface",
-                "ec2:AssignPrivateIpAddresses",
-                "ec2:UnassignPrivateIpAddresses"
-            ],
-            "Resource": "*"
-        },
 		{
 			"Effect": "Allow",
 			"Action": [
@@ -292,7 +260,12 @@ resource "aws_iam_policy" "opxs_batch_email_send_feedback_lambda_policy" {
 EOF
 }
 
-resource "aws_iam_role_policy_attachment" "opxs_batch_email_send_feedback_lambda_policy_attachment" {
+resource "aws_iam_role_policy_attachment" "opxs_batch_email_send_feedback_lambda_basic" {
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+  role       = aws_iam_role.opxs_batch_email_send_feedback_lambda_role.name
+}
+
+resource "aws_iam_role_policy_attachment" "opxs_batch_email_send_feedback_lambda_additional" {
   role       = aws_iam_role.opxs_batch_email_send_feedback_lambda_role.name
   policy_arn = aws_iam_policy.opxs_batch_email_send_feedback_lambda_policy.arn
 }
@@ -353,22 +326,6 @@ resource "aws_iam_policy" "opxs_batch_image_convert_lambda_policy" {
 	"Version": "2012-10-17",
 	"Statement": [
         {
-            "Sid": "AWSLambdaVPCAccessExecutionPermissions",
-            "Effect": "Allow",
-            "Action": [
-                "logs:CreateLogGroup",
-                "logs:CreateLogStream",
-                "logs:PutLogEvents",
-                "ec2:CreateNetworkInterface",
-                "ec2:DescribeNetworkInterfaces",
-                "ec2:DescribeSubnets",
-                "ec2:DeleteNetworkInterface",
-                "ec2:AssignPrivateIpAddresses",
-                "ec2:UnassignPrivateIpAddresses"
-            ],
-            "Resource": "*"
-        },
-        {
             "Effect": "Allow",
             "Action": [
                 "sqs:DeleteMessage",
@@ -399,7 +356,12 @@ resource "aws_iam_policy" "opxs_batch_image_convert_lambda_policy" {
 EOF
 }
 
-resource "aws_iam_role_policy_attachment" "opxs_batch_image_convert_lambda_policy_attachment" {
+resource "aws_iam_role_policy_attachment" "opxs_batch_image_convert_lambda_basic" {
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+  role       = aws_iam_role.opxs_batch_image_convert_lambda_role.name
+}
+
+resource "aws_iam_role_policy_attachment" "opxs_batch_image_convert_lambda_additional" {
   role       = aws_iam_role.opxs_batch_image_convert_lambda_role.name
   policy_arn = aws_iam_policy.opxs_batch_image_convert_lambda_policy.arn
 }
