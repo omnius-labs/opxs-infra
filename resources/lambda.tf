@@ -89,7 +89,7 @@ resource "aws_cloudwatch_log_group" "opxs_api_lambda" {
 
 resource "aws_lambda_function" "opxs_batch_email_send" {
   function_name = local.opxs_batch_email_send_lambda_name
-  role          = aws_iam_role.opxs_batch_email_send_lambda_role.arn
+  role          = aws_iam_role.opxs_batch_email_send_lambda.arn
   package_type  = "Image"
   image_uri     = "${aws_ecr_repository.opxs_batch_email_send.repository_url}:latest"
   publish       = true
@@ -109,7 +109,7 @@ resource "aws_lambda_function" "opxs_batch_email_send" {
   lifecycle {
     ignore_changes = [image_uri]
   }
-  depends_on = [aws_cloudwatch_log_group.opxs_batch_email_send_lambda_log_group]
+  depends_on = [aws_cloudwatch_log_group.opxs_batch_email_send_lambda]
 }
 
 resource "aws_iam_role" "opxs_batch_email_send_lambda" {
@@ -167,12 +167,12 @@ EOF
 
 resource "aws_iam_role_policy_attachment" "opxs_batch_email_send_lambda_basic" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
-  role       = aws_iam_role.opxs_batch_email_send_lambda_role.name
+  role       = aws_iam_role.opxs_batch_email_send_lambda.name
 }
 
 resource "aws_iam_role_policy_attachment" "opxs_batch_email_send_lambda_additional" {
-  role       = aws_iam_role.opxs_batch_email_send_lambda_role.name
-  policy_arn = aws_iam_policy.opxs_batch_email_send_lambda_policy.arn
+  role       = aws_iam_role.opxs_batch_email_send_lambda.name
+  policy_arn = aws_iam_policy.opxs_batch_email_send_lambda.arn
 }
 
 resource "aws_cloudwatch_log_group" "opxs_batch_email_send_lambda" {
@@ -180,9 +180,9 @@ resource "aws_cloudwatch_log_group" "opxs_batch_email_send_lambda" {
   retention_in_days = 3
 }
 
-resource "aws_lambda_function" "opxs_batch_email_send_feedback_lambda" {
+resource "aws_lambda_function" "opxs_batch_email_send_feedback" {
   function_name = local.opxs_batch_email_send_feedback_lambda_name
-  role          = aws_iam_role.opxs_batch_email_send_feedback_lambda_role.arn
+  role          = aws_iam_role.opxs_batch_email_send_feedback_lambda.arn
   package_type  = "Image"
   image_uri     = "${aws_ecr_repository.opxs_batch_email_send_feedback.repository_url}:latest"
   publish       = true
@@ -205,7 +205,7 @@ resource "aws_lambda_function" "opxs_batch_email_send_feedback_lambda" {
   depends_on = [aws_cloudwatch_log_group.opxs_batch_email_send_feedback_lambda_log_group]
 }
 
-resource "aws_iam_role" "opxs_batch_email_send_feedback_lambda_role" {
+resource "aws_iam_role" "opxs_batch_email_send_feedback_lambda" {
   name = "opxs-batch-email-send-feedback-lambda-role"
 
   assume_role_policy = <<EOF
@@ -252,11 +252,11 @@ EOF
 
 resource "aws_iam_role_policy_attachment" "opxs_batch_email_send_feedback_lambda_basic" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
-  role       = aws_iam_role.opxs_batch_email_send_feedback_lambda_role.name
+  role       = aws_iam_role.opxs_batch_email_send_feedback_lambda.name
 }
 
 resource "aws_iam_role_policy_attachment" "opxs_batch_email_send_feedback_lambda_additional" {
-  role       = aws_iam_role.opxs_batch_email_send_feedback_lambda_role.name
+  role       = aws_iam_role.opxs_batch_email_send_feedback_lambda.name
   policy_arn = aws_iam_policy.opxs_batch_email_send_feedback_lambda_policy.arn
 }
 
@@ -265,9 +265,9 @@ resource "aws_cloudwatch_log_group" "opxs_batch_email_send_feedback_lambda_log_g
   retention_in_days = 3
 }
 
-resource "aws_lambda_function" "opxs_batch_file_convert_lambda" {
+resource "aws_lambda_function" "opxs_batch_file_convert" {
   function_name = local.opxs_batch_file_convert_lambda_name
-  role          = aws_iam_role.opxs_batch_file_convert_lambda_role.arn
+  role          = aws_iam_role.opxs_batch_file_convert_lambda.arn
   package_type  = "Image"
   image_uri     = "${aws_ecr_repository.opxs_batch_file_convert.repository_url}:latest"
   memory_size   = 1024
@@ -286,10 +286,10 @@ resource "aws_lambda_function" "opxs_batch_file_convert_lambda" {
   lifecycle {
     ignore_changes = [image_uri]
   }
-  depends_on = [aws_cloudwatch_log_group.opxs_batch_file_convert_lambda_log_group]
+  depends_on = [aws_cloudwatch_log_group.opxs_batch_file_convert_lambda]
 }
 
-resource "aws_iam_role" "opxs_batch_file_convert_lambda_role" {
+resource "aws_iam_role" "opxs_batch_file_convert_lambda" {
   name = "opxs-batch-file-convert-lambda-role"
 
   assume_role_policy = <<EOF
@@ -309,7 +309,7 @@ resource "aws_iam_role" "opxs_batch_file_convert_lambda_role" {
 EOF
 }
 
-resource "aws_iam_policy" "opxs_batch_file_convert_lambda_policy" {
+resource "aws_iam_policy" "opxs_batch_file_convert_lambda" {
   name   = "opxs-batch-file-convert-lambda-policy"
   policy = <<EOF
 {
@@ -348,15 +348,15 @@ EOF
 
 resource "aws_iam_role_policy_attachment" "opxs_batch_file_convert_lambda_basic" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
-  role       = aws_iam_role.opxs_batch_file_convert_lambda_role.name
+  role       = aws_iam_role.opxs_batch_file_convert_lambda.name
 }
 
 resource "aws_iam_role_policy_attachment" "opxs_batch_file_convert_lambda_additional" {
-  role       = aws_iam_role.opxs_batch_file_convert_lambda_role.name
-  policy_arn = aws_iam_policy.opxs_batch_file_convert_lambda_policy.arn
+  role       = aws_iam_role.opxs_batch_file_convert_lambda.name
+  policy_arn = aws_iam_policy.opxs_batch_file_convert_lambda.arn
 }
 
-resource "aws_cloudwatch_log_group" "opxs_batch_file_convert_lambda_log_group" {
+resource "aws_cloudwatch_log_group" "opxs_batch_file_convert_lambda" {
   name              = "/aws/lambda/${local.opxs_batch_file_convert_lambda_name}"
   retention_in_days = 3
 }

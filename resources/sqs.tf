@@ -20,7 +20,7 @@ resource "aws_sqs_queue" "opxs_batch_email_send_error_sqs" {
 resource "aws_lambda_event_source_mapping" "opxs_batch_email_send_lambda" {
   batch_size       = 1
   event_source_arn = aws_sqs_queue.opxs_batch_email_send_sqs.arn
-  function_name    = aws_lambda_function.opxs_batch_email_send_lambda.arn
+  function_name    = aws_lambda_function.opxs_batch_email_send.arn
 }
 
 resource "aws_sqs_queue" "opxs_batch_file_convert_sqs" {
@@ -79,5 +79,5 @@ resource "aws_sqs_queue" "opxs_batch_file_convert_error_sqs" {
 resource "aws_lambda_event_source_mapping" "opxs_batch_file_convert_lambda" {
   batch_size       = 1
   event_source_arn = aws_sqs_queue.opxs_batch_file_convert_sqs.arn
-  function_name    = aws_lambda_function.opxs_batch_file_convert_lambda.arn
+  function_name    = aws_lambda_function.opxs_batch_file_convert.arn
 }
