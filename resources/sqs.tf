@@ -23,8 +23,8 @@ resource "aws_lambda_event_source_mapping" "opxs_batch_email_send_lambda" {
   function_name    = aws_lambda_function.opxs_batch_email_send_lambda.arn
 }
 
-resource "aws_sqs_queue" "opxs_batch_image_convert_sqs" {
-  name                       = "opxs-batch-image-convert-sqs"
+resource "aws_sqs_queue" "opxs_batch_file_convert_sqs" {
+  name                       = "opxs-batch-file-convert-sqs"
   message_retention_seconds  = 60 * 60 * 24 * 4
   visibility_timeout_seconds = 60 * 15 + 10
   receive_wait_time_seconds  = 5
@@ -40,7 +40,7 @@ resource "aws_sqs_queue" "opxs_batch_image_convert_sqs" {
         "AWS": "arn:aws:iam::${var.aws_account_id}:root"
       },
       "Action": "SQS:*",
-      "Resource": "arn:aws:sqs:us-east-1:${var.aws_account_id}:opxs-batch-image-convert-sqs"
+      "Resource": "arn:aws:sqs:us-east-1:${var.aws_account_id}:opxs-batch-file-convert-sqs"
     },
     {
       "Sid": "example-statement-ID",
@@ -49,13 +49,13 @@ resource "aws_sqs_queue" "opxs_batch_image_convert_sqs" {
         "Service": "s3.amazonaws.com"
       },
       "Action": "SQS:SendMessage",
-      "Resource": "arn:aws:sqs:us-east-1:${var.aws_account_id}:opxs-batch-image-convert-sqs",
+      "Resource": "arn:aws:sqs:us-east-1:${var.aws_account_id}:opxs-batch-file-convert-sqs",
       "Condition": {
         "StringEquals": {
           "aws:SourceAccount": "${var.aws_account_id}"
         },
         "ArnLike": {
-          "aws:SourceArn": "arn:aws:s3:::opxs.v1.${var.run_mode}.image-convert"
+          "aws:SourceArn": "arn:aws:s3:::opxs.v1.${var.run_mode}.file-convert"
         }
       }
     }
@@ -64,20 +64,20 @@ resource "aws_sqs_queue" "opxs_batch_image_convert_sqs" {
 EOF
 
   redrive_policy = jsonencode({
-    deadLetterTargetArn = aws_sqs_queue.opxs_batch_image_convert_error_sqs.arn
+    deadLetterTargetArn = aws_sqs_queue.opxs_batch_file_convert_error_sqs.arn
     maxReceiveCount     = 2
   })
 }
 
-resource "aws_sqs_queue" "opxs_batch_image_convert_error_sqs" {
-  name                       = "opxs-batch-image-convert-error-sqs"
+resource "aws_sqs_queue" "opxs_batch_file_convert_error_sqs" {
+  name                       = "opxs-batch-file-convert-error-sqs"
   message_retention_seconds  = 60 * 60 * 24 * 4
   visibility_timeout_seconds = 60 * 15 + 10
   receive_wait_time_seconds  = 5
 }
 
-resource "aws_lambda_event_source_mapping" "opxs_batch_image_convert_lambda" {
+resource "aws_lambda_event_source_mapping" "opxs_batch_file_convert_lambda" {
   batch_size       = 1
-  event_source_arn = aws_sqs_queue.opxs_batch_image_convert_sqs.arn
-  function_name    = aws_lambda_function.opxs_batch_image_convert_lambda.arn
+  event_source_arn = aws_sqs_queue.opxs_batch_file_convert_sqs.arn
+  function_name    = aws_lambda_function.opxs_batch_file_convert_lambda.arn
 }
