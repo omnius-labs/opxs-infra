@@ -29,7 +29,7 @@ resource "aws_cloudfront_distribution" "opxs" {
     cached_methods   = ["GET", "HEAD"]
     target_origin_id = "opxs-s3"
     forwarded_values {
-      query_string = false
+      query_string = true
       cookies {
         forward = "none"
       }
@@ -50,7 +50,7 @@ resource "aws_cloudfront_distribution" "opxs" {
     cached_methods   = ["HEAD", "GET", "OPTIONS"]
     target_origin_id = "opxs-api-gateway"
     forwarded_values {
-      query_string = false
+      query_string = true
       cookies {
         forward = "all"
       }
